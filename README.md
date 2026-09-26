@@ -12,9 +12,10 @@ Then open <http://localhost:8080>.
 ## Publish on GitHub Pages
 
 This project repository publishes at <https://raynew.github.io/kingkind-website/>.
-After pushing the `main` branch, open the repository's **Settings → Pages**,
-choose **Deploy from a branch**, select `main` and `/(root)`, then save. GitHub
-will publish the site and show its deployment status on that page.
+After pushing the `main` branch, open the repository's **Settings → Pages**
+and set **Build and deployment → Source** to **GitHub Actions**. The workflow
+in `.github/workflows/deploy.yml` then deploys the site on every push to `main`.
+The published site is <https://raynew.github.io/kingkind-website/>.
 
 ## Instagram gallery
 
