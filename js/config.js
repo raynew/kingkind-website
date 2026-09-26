@@ -10,11 +10,11 @@
  * profile instead of loading photos.
  */
 window.SITE_CONFIG = {
-  photographer: "KingKind",
-  email: "hello@kingkind.photo",
+  photographer: "Rayne",
+  email: "hello@kingkind.co.uk",
 
   instagram: {
-    username: "kingkind",            // your Instagram handle (no @)
+    username: "akingind",            // your Instagram handle (no @)
     accessToken: "",                 // browser-visible; do not publish a private token
     photoCount: 12,                  // how many posts to show
   },

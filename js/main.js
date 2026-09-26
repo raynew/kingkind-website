@@ -11,7 +11,7 @@
   const galleryEl = document.getElementById("gallery");
   const noteEl = document.getElementById("feed-note");
   const sampleGallery = galleryEl ? galleryEl.innerHTML : "";
-  const profileUrl = `https://www.instagram.com/${ig.username || "kingkind"}/`;
+  const profileUrl = `https://www.instagram.com/${ig.username || "akingind"}/`;
 
   // Wire up every Instagram link on the page.
   ["ig-profile-link", "gallery-ig-link", "contact-ig", "footer-ig"].forEach((id) => {
@@ -114,7 +114,7 @@
       galleryEl.innerHTML = "";
       galleryEl.appendChild(grid);
       galleryEl.removeAttribute("aria-busy");
-      if (noteEl) noteEl.textContent = `Showing recent portraits from @${ig.username || "kingkind"}.`;
+      if (noteEl) noteEl.textContent = `Showing recent portraits from @${ig.username || "akingind"}.`;
     } catch (err) {
       console.warn("Instagram feed unavailable:", err);
       showFallback(

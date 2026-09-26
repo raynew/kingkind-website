@@ -25,26 +25,33 @@ the feed is configured, the page displays sample portraits and links to the
 Instagram profile.
 
 1. Create and configure a Meta app for the Instagram API with Instagram Login.
-2. Connect the photographer's professional Instagram account and grant the
-   `instagram_business_basic` permission.
-3. Generate an access token for that account.
-4. In `js/config.js`, set the Instagram username and token:
+2. In the app dashboard, open **Instagram → API setup with Instagram Business
+  Login**, connect the photographer's professional (Business or Creator)
+  account, and generate a token with the `instagram_business_basic`
+  permission.
+3. Set the account's handle in `js/config.js` (without the `@`).
+
+For a local-only test, you can temporarily set `accessToken` there:
 
    ```js
    instagram: {
-     username: "your_handle",
+    username: "akingind",
      accessToken: "your_access_token",
      photoCount: 12,
    },
    ```
 
-The feed requests up to 12 recent posts and displays image posts. If the
-request fails or returns no images, the sample portraits remain visible.
+The feed requests up to 12 recent image posts. If the request fails or returns
+no images, the sample portraits remain visible. Meta dashboard tokens last
+about 60 days.
 
-**Token security:** a token placed in `js/config.js` is sent to every site
-visitor's browser. Do not put a private or valuable token in a public site or
-repository. For a public deployment, fetch Instagram posts through a small
-server-side function and keep the token in the host's environment variables.
+**Important for the live site:** this GitHub repository and its Pages site are
+public. Any token in `js/config.js` is visible to visitors; never commit or
+deploy it there. GitHub Pages cannot keep API credentials secret. For a live
+automatic feed, use a server-side function (for example, a Cloudflare Worker)
+that stores the token as an environment secret and returns only the public
+image data, or use an Instagram feed provider. Without that proxy/provider,
+the public site should keep showing the sample portraits and Instagram link.
 
 ## Customize
 
