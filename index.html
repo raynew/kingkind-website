@@ -10,11 +10,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <script src="js/config.js"></script>
 </head>
 <body>
   <header class="site-header">
-    <a href="#top" class="brand">KingKind</a>
+    <a href="#top" class="brand"><img src="assets/logo-white.png" alt="KingKind" width="535" height="510" /></a>
     <nav class="site-nav" aria-label="Main navigation">
       <a href="#work">Work</a>
       <a href="#about">About</a>
@@ -24,7 +28,7 @@
 
   <main id="top">
     <section class="hero">
-      <img class="hero-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=2200&amp;q=88" alt="Portrait of a woman looking directly into the camera" fetchpriority="high" />
+      <img id="hero-image" class="hero-image" alt="" hidden fetchpriority="high" />
       <div class="hero-content">
         <p class="hero-kicker">Rayne · Hayling Island &amp; Budapest</p>
         <h1 class="hero-title">KingKind</h1>
@@ -34,7 +38,6 @@
           <a href="#contact" class="btn btn-light">Make something together</a>
         </div>
       </div>
-      <p class="hero-credit">Portrait study · Unsplash</p>
     </section>
 
     <section id="work" class="section gallery-section">
@@ -72,8 +75,7 @@
     <section id="about" class="section about">
       <div class="about-grid">
         <div class="about-image-wrap">
-          <img class="about-image" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&amp;fit=crop&amp;w=900&amp;q=85" alt="Sample portrait in soft studio light" loading="lazy" />
-          <span class="image-note">A study in natural light</span>
+          <img id="about-image" class="about-image" alt="" loading="lazy" />
         </div>
         <div class="about-text">
           <p class="section-kicker">The approach</p>
@@ -112,7 +114,10 @@
   </main>
 
   <footer class="site-footer">
-    <span>© <span id="year"></span> KingKind Photography</span>
+    <span class="footer-brand">
+      <img src="assets/logo-dark.png" alt="" width="535" height="510" loading="lazy" />
+      <span>© <span id="year"></span> KingKind Photography</span>
+    </span>
     <a id="footer-ig" href="#" rel="noopener" target="_blank">Instagram <span aria-hidden="true">↗</span></a>
   </footer>
 

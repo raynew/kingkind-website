@@ -8,8 +8,9 @@
  */
 
 const GRAPH_URL = "https://graph.facebook.com/v27.0";
-const MAX_POSTS = 12;
-// Ask for more than we show, because videos are left out of the gallery.
+// The site's header image, About image and 12 gallery tiles.
+const MAX_POSTS = 14;
+// Ask for more than we show, because videos are left out.
 const FETCH_LIMIT = MAX_POSTS * 2;
 const CACHE_SECONDS = 900;
 const FIELDS = [

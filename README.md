@@ -19,10 +19,15 @@ The published site is <https://raynew.github.io/kingkind-website/>.
 
 ## Instagram gallery
 
-The gallery shows up to 12 recent image and carousel posts from
-[@akingkind](https://www.instagram.com/akingkind/). Videos are left out. If the
-feed isn't configured or can't be reached, the page shows the sample portraits
-and a link to the Instagram profile.
+The site uses recent image and carousel posts from
+[@akingkind](https://www.instagram.com/akingkind/). Videos are left out. The
+header image uses the newest post, the About image uses the second newest, and
+the gallery shows up to 12 posts after those. Instagram's API doesn't say which
+posts are pinned, so pins are ignored.
+
+If the feed isn't configured or can't be reached, the gallery shows the sample
+portraits and a link to the Instagram profile, the header shows a plain
+background, and the About image is hidden.
 
 GitHub Pages is public and can't keep secrets, so the access token lives in a
 small Cloudflare Worker (`worker/`). The site asks the Worker for posts, and the

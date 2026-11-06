@@ -33,7 +33,35 @@
 
   // ---------- Gallery ----------
 
+  // The header and About images come from the two latest posts.
+  function setFeatureImages(posts) {
+    const hero = document.getElementById("hero-image");
+    if (hero) {
+      hero.addEventListener("load", () => { hero.hidden = false; }, { once: true });
+      showPostImage(hero, posts[0]);
+    }
+    const about = document.getElementById("about-image");
+    if (about) {
+      about.addEventListener("error", hideAboutImage, { once: true });
+      showPostImage(about, posts[1] || posts[0]);
+    }
+  }
+
+  function showPostImage(img, post) {
+    img.alt = post.caption ? cleanCaption(post.caption).slice(0, 180) : "Portrait photograph by Rayne";
+    img.src = post.image;
+  }
+
+  function hideAboutImage() {
+    const about = document.getElementById("about-image");
+    const wrap = about && about.closest(".about-image-wrap");
+    if (!wrap) return;
+    wrap.hidden = true;
+    wrap.parentElement.classList.add("about-grid--text-only");
+  }
+
   function showFallback(message) {
+    hideAboutImage();
     if (galleryEl) {
       galleryEl.innerHTML = sampleGallery;
       galleryEl.removeAttribute("aria-busy");
@@ -95,8 +123,13 @@
       if (!res.ok) throw new Error(`Instagram feed error (${res.status})`);
       const data = await res.json();
 
-      const posts = (data.posts || []).filter((p) => p.image).slice(0, limit);
-      if (posts.length === 0) throw new Error("No images returned");
+      const allPosts = (data.posts || []).filter((p) => p.image);
+      if (allPosts.length === 0) throw new Error("No images returned");
+      setFeatureImages(allPosts);
+
+      // The two newest posts are used above, so the gallery starts after them.
+      const laterPosts = allPosts.slice(2, 2 + limit);
+      const posts = laterPosts.length > 0 ? laterPosts : allPosts.slice(0, limit);
 
       const grid = document.createDocumentFragment();
       posts.forEach((post) => grid.appendChild(renderTile(post)));

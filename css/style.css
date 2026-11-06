@@ -40,11 +40,12 @@ a { color: inherit; }
   color: #fff;
 }
 
-.brand {
-  font-family: var(--serif);
-  font-size: 1.7rem;
-  line-height: 1;
-  text-decoration: none;
+.brand { display: block; line-height: 0; }
+
+.brand img {
+  display: block;
+  width: auto;
+  height: 3.5rem;
 }
 
 .site-nav {
@@ -135,15 +136,6 @@ a { color: inherit; }
 }
 
 .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
-.hero-credit {
-  position: absolute;
-  right: clamp(1.25rem, 5vw, 4rem);
-  bottom: 1rem;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.72rem;
-}
 
 .btn {
   display: inline-flex;
@@ -272,23 +264,15 @@ h2 {
   align-items: center;
 }
 
-.about-image-wrap { position: relative; }
+.about-image-wrap { aspect-ratio: 4 / 5; background: #dfe1dc; }
+.about-image-wrap[hidden] { display: none; }
+.about-grid--text-only { grid-template-columns: 1fr; }
 
 .about-image {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 100%;
   object-fit: cover;
-}
-
-.image-note {
-  position: absolute;
-  right: 0.75rem;
-  bottom: 0.75rem;
-  padding: 0.35rem 0.6rem;
-  background: rgba(23, 25, 24, 0.78);
-  color: #fff;
-  font-size: 0.7rem;
 }
 
 .about-text { max-width: 570px; }
@@ -331,6 +315,9 @@ h2 {
   font-size: 0.8rem;
 }
 
+.footer-brand { display: inline-flex; align-items: center; gap: 0.7rem; }
+.footer-brand img { display: block; width: auto; height: 2.25rem; }
+
 .site-footer a { text-decoration: none; }
 .site-footer a:hover { color: var(--accent); }
 
@@ -360,7 +347,7 @@ a:focus-visible {
 
 @media (max-width: 520px) {
   .site-header { padding: 1.2rem 1.1rem; }
-  .brand { font-size: 1.45rem; }
+  .brand img { height: 2.9rem; }
   .site-nav { gap: 0.85rem; font-size: 0.82rem; }
   .site-nav a:first-child,
   .site-nav a:nth-child(2) { display: none; }
@@ -370,7 +357,6 @@ a:focus-visible {
   .hero-title { font-size: 4.5rem; }
   .hero-sub { max-width: 25ch; font-size: 1rem; }
   .hero-actions { align-items: stretch; flex-direction: column; width: min(100%, 280px); }
-  .hero-credit { right: 1rem; bottom: 0.65rem; }
   .section { padding: 3.75rem 1.1rem; }
   .section-head { align-items: start; flex-direction: column; margin-bottom: 1.5rem; }
   h2 { font-size: 2.8rem; }

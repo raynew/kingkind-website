@@ -49,7 +49,7 @@ test("keeps images and carousels, and leaves out videos", async () => {
   assert.deepEqual(posts.map((p) => p.image), ["https://cdn/a.jpg", "https://cdn/b.jpg"]);
 });
 
-test("returns at most 12 posts", async () => {
+test("returns at most 14 posts", async () => {
   mockMeta({
     data: Array.from({ length: 20 }, (_, i) => ({
       media_type: "IMAGE",
@@ -57,7 +57,7 @@ test("returns at most 12 posts", async () => {
     })),
   });
   const { posts } = await (await worker.fetch(get(), env)).json();
-  assert.equal(posts.length, 12);
+  assert.equal(posts.length, 14);
 });
 
 test("never exposes the token, even when Meta returns an error", async () => {
