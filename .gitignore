@@ -1,0 +1,4 @@
+# Local Cloudflare files. .dev.vars can hold the Instagram access token.
+.dev.vars
+.wrangler/
+node_modules/

@@ -1,6 +1,6 @@
 /**
  * KingKind — site logic
- * Renders the gallery from the Instagram Graph API when a token is
+ * Renders the gallery from the Instagram feed Worker when one is
  * configured, otherwise shows a clean fallback linking to the profile.
  */
 (function () {
@@ -11,7 +11,7 @@
   const galleryEl = document.getElementById("gallery");
   const noteEl = document.getElementById("feed-note");
   const sampleGallery = galleryEl ? galleryEl.innerHTML : "";
-  const profileUrl = `https://www.instagram.com/${ig.username || "akingind"}/`;
+  const profileUrl = `https://www.instagram.com/${ig.username || "akingkind"}/`;
 
   // Wire up every Instagram link on the page.
   ["ig-profile-link", "gallery-ig-link", "contact-ig", "footer-ig"].forEach((id) => {
@@ -60,7 +60,7 @@
     const img = document.createElement("img");
     img.loading = "lazy";
     img.alt = post.caption ? cleanCaption(post.caption).slice(0, 180) : "Portrait photograph";
-    img.src = post.thumbnail_url || post.media_url;
+    img.src = post.image;
 
     tile.appendChild(img);
 
@@ -78,8 +78,7 @@
   }
 
   async function loadFromInstagram() {
-    const token = ig.accessToken || "";
-    if (!token) {
+    if (!ig.feedUrl) {
       showFallback(
         "Preview portraits are shown until the Instagram feed is connected."
       );
@@ -91,22 +90,12 @@
     showSkeletons(limit);
 
     try {
-      // Instagram Graph API returns at most 12 posts per page, so one
-      // request covers a typical "recent work" wall.
-      const url =
-        `https://graph.instagram.com/me/media?limit=${limit}` +
-        `&fields=media_type,media_url,thumbnail_url,permalink,caption,timestamp`;
-
-      const res = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (!res.ok) throw new Error(`Instagram API error (${res.status})`);
+      // The Worker holds the access token and returns only public post details.
+      const res = await fetch(ig.feedUrl);
+      if (!res.ok) throw new Error(`Instagram feed error (${res.status})`);
       const data = await res.json();
 
-      const posts = (data.data || []).filter(
-        (p) => p.media_type === "IMAGE" && (p.media_url || p.thumbnail_url)
-      );
+      const posts = (data.posts || []).filter((p) => p.image).slice(0, limit);
       if (posts.length === 0) throw new Error("No images returned");
 
       const grid = document.createDocumentFragment();
@@ -114,7 +103,7 @@
       galleryEl.innerHTML = "";
       galleryEl.appendChild(grid);
       galleryEl.removeAttribute("aria-busy");
-      if (noteEl) noteEl.textContent = `Showing recent portraits from @${ig.username || "akingind"}.`;
+      if (noteEl) noteEl.textContent = `Showing recent portraits from @${ig.username || "akingkind"}.`;
     } catch (err) {
       console.warn("Instagram feed unavailable:", err);
       showFallback(

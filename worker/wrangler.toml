@@ -1,0 +1,12 @@
+name = "kingkind-instagram-feed"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+# Public Instagram account ID for @akingkind. Not a secret.
+IG_USER_ID = "17841409841837461"
+# Websites allowed to read the feed from a browser.
+ALLOWED_ORIGINS = "https://kingkind.co.uk,https://www.kingkind.co.uk,http://localhost:8080"
+
+# The access token is stored separately and never committed:
+#   npx wrangler secret put IG_ACCESS_TOKEN

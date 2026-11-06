@@ -19,39 +19,51 @@ The published site is <https://raynew.github.io/kingkind-website/>.
 
 ## Instagram gallery
 
-The gallery can load recent image posts from the photographer's Instagram
-professional account through Meta's Instagram API with Instagram Login. Until
-the feed is configured, the page displays sample portraits and links to the
-Instagram profile.
+The gallery shows up to 12 recent image and carousel posts from
+[@akingkind](https://www.instagram.com/akingkind/). Videos are left out. If the
+feed isn't configured or can't be reached, the page shows the sample portraits
+and a link to the Instagram profile.
 
-1. Create and configure a Meta app for the Instagram API with Instagram Login.
-2. In the app dashboard, open **Instagram → API setup with Instagram Business
-  Login**, connect the photographer's professional (Business or Creator)
-  account, and generate a token with the `instagram_business_basic`
-  permission.
-3. Set the account's handle in `js/config.js` (without the `@`).
+GitHub Pages is public and can't keep secrets, so the access token lives in a
+small Cloudflare Worker (`worker/`). The site asks the Worker for posts, and the
+Worker returns only public details. **Never put the token in `js/config.js` or
+commit it anywhere.**
 
-For a local-only test, you can temporarily set `accessToken` there:
+### Get an access token
 
-   ```js
-   instagram: {
-    username: "akingind",
-     accessToken: "your_access_token",
-     photoCount: 12,
-   },
-   ```
+1. In the King Kind business portfolio, open **Settings → Users → System users**
+   and add a system user with the **Employee** role. Meta rejected the name
+   `KingKind Website System User`, so choose a different one.
+2. Select the system user, click **Assign assets**, and assign the `akingkind`
+   Instagram account and the **KingKind Website** app.
+3. Click **Generate token**, select the app, tick `instagram_basic`, and choose
+   the expiry. Save the token in a password manager.
 
-The feed requests up to 12 recent image posts. If the request fails or returns
-no images, the sample portraits remain visible. Meta dashboard tokens last
-about 60 days.
+The token from the app's **API setup with Unified login** page did not work for
+this account: Meta listed no Instagram account against it.
 
-**Important for the live site:** this GitHub repository and its Pages site are
-public. Any token in `js/config.js` is visible to visitors; never commit or
-deploy it there. GitHub Pages cannot keep API credentials secret. For a live
-automatic feed, use a server-side function (for example, a Cloudflare Worker)
-that stores the token as an environment secret and returns only the public
-image data, or use an Instagram feed provider. Without that proxy/provider,
-the public site should keep showing the sample portraits and Instagram link.
+### Deploy the Worker
+
+You need a free Cloudflare account. From the `worker` folder:
+
+```bash
+npx wrangler login
+```
+
+```bash
+npx wrangler secret put IG_ACCESS_TOKEN
+```
+
+```bash
+npx wrangler deploy
+```
+
+Then set `instagram.feedUrl` in `js/config.js` to the address that `deploy`
+prints, followed by `/feed`, and push the site.
+
+To replace the token later, run the `secret put` command again. The site's
+addresses are listed in `ALLOWED_ORIGINS` in `worker/wrangler.toml`; update them
+if the domain changes. Run the Worker's tests with `npm test` from `worker`.
 
 ## Customize
 

@@ -1,0 +1,8 @@
+{
+  "name": "kingkind-instagram-feed",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}
